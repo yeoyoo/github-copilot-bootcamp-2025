@@ -37,11 +37,11 @@ INFO:     Application startup complete.
 
 ## 사용해보기
 
-1. http://127.0.0.1:8000 에 접속하면 간단한 SNS 서비스를 사용해볼 수 있습니다. 간단한 프론트엔드가 함께 포함되어 있습니다. 배포된 데모 서비스는 아래와 같습니다. 
+http://127.0.0.1:8000 에 접속하면 간단한 SNS 서비스를 사용해볼 수 있습니다. 간단한 프론트엔드가 함께 포함되어 있습니다. 배포된 데모 서비스는 아래와 같습니다. 
 
 [데모 웹서비스](https://simplesns-axeyhcbsfnfscfe9.koreasouth-01.azurewebsites.net/)
 
-2. http://127.0.0.1:8000/docs 에 접속하면, Swagger UI 기반의 API 문서를 확인할 수 있습니다. 이 페이지에서는 모든 API 엔드포인트를 확인하고 직접 테스트해볼 수 있습니다.
+http://127.0.0.1:8000/docs 에 접속하면, Swagger UI 기반의 API 문서를 확인할 수 있습니다. 이 페이지에서는 모든 API 엔드포인트를 확인하고 직접 테스트해볼 수 있습니다.
 
 [데모 Swagger UI 서비스](https://simplesns-axeyhcbsfnfscfe9.koreasouth-01.azurewebsites.net/docs)
 
