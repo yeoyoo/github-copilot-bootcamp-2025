@@ -49,7 +49,10 @@
         "ms-vscode.vscode-node-azure-pack",
         "redhat.vscode-yaml",
         "vscjava.vscode-java-pack"
-      ]
+      ],
+      "settings": {
+        "chat.agent.enabled": true
+      }
     }
   },
 
