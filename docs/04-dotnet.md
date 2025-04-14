@@ -12,6 +12,12 @@ JavaScript 개발자 프론트엔드 웹 API를 React 기반으로 개발하고 
 
 ## 개발 과정 프롬프트
 
+- [블레이저 웹 앱 프로젝트 준비](#블레이저-웹-앱-프로젝트-준비)
+- [React 웹 앱 마이그레이션](#react-웹-앱-마이그레이션)
+- [Java 앱 Containerization](#java-앱-containerization)
+- [Blazor 앱 Containerization](#blazor-앱-containerization)
+- [Container 오케스트레이션](#container-오케스트레이션)
+
 ### 블레이저 웹 앱 프로젝트 준비
 
 1. GitHub Copilot이 현재 에이전트모드인지 확인합니다. 모델은 `Claude 3.7 Sonnet`을 선택하세요.
