@@ -2,7 +2,7 @@
 
 ## 시나리오
 
-Contoso 아웃도어 컴파니의 마케팅 팀에서는 제품 홍보를 위한 마이크로 소셜 미디어 웹사이트를 빠르게 론칭하고 싶어 합니다. 개발팀의 Python 개발자인 당신은 GitHub Codespaces 안에서 GitHub Copilot을 이용해 간단한 백엔드 API를 만들어 달라는 요청을 받았습니다.
+Contoso 아웃도어 컴파니의 마케팅 팀에서는 제품 홍보를 위한 마이크로 소셜 미디어 웹사이트를 빠르게 론칭하고 싶어 합니다. 개발팀의 Python 개발자인 당신은 GitHub Codespaces 안에서 GitHub Copilot을 이용해 간단한 백엔드 API를 만들어 달라는 요청을 받았습니다. 이에 따라 FastAPI를 사용하여 SNS 기능을 구현하고, 간단히 SQLite 데이터베이스를 연동해 CRUD를 수행하려고 합니다.
 
 ## 사전 준비사항
 
@@ -10,9 +10,72 @@ Contoso 아웃도어 컴파니의 마케팅 팀에서는 제품 홍보를 위한
 
 ## 개발 과정 프롬프트
 
-TBD
+아래는 FastAPI 앱을 개발하여 간단한 SNS 기능을 구현하는 과정입니다.
 
+* FastAPI 앱 프로젝트 준비
+* CRUD API 구현
+* 가상환경으로 앱 실행
+* API 확인
+* 기본 데이터베이스 테이블 생성
 
----
+### FastAPI 앱 프로젝트 준비
 
-축하합니다! **Python 앱 개발** 실습이 끝났습니다. 이제 [STEP 02: JavaScript 앱 개발](./02-javascript.md) 단계로 넘어가세요.
+1. 가상환경 생성
+
+Python 프로젝트 디렉토리를 생성하고, 다음 명령어로 가상환경(venv)을 만듭니다:
+
+```bash
+python -m venv .venv
+```
+
+2. 가상환경 활성화 및 FastAPI 설치
+
+# Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+# macOS / Linux
+```bash
+source .venv/bin/activate
+```
+
+```bash
+pip install fastapi uvicorn
+```
+
+3. main.py 빈 파일 생성
+
+### CRUD API 구현
+
+FastAPI를 활용하여 소셜 네트워크 서비스의 모든 핵심 기능을 REST API로 구현합니다.
+
+```text
+FastAPI를 사용하여 openapi.yaml 명세를 기반으로 소셜 네트워크 서비스의 백엔드 API를 구현해. openapi.yaml의 정의에 따라 포스트, 댓글, 좋아요 기능을 포함하는 모든 엔드포인트를 구현한다. 명세에 맞게 적절한 HTTP 메소드, 상태 코드, 요청/응답 형식을 구현하낟. Pydantic 모델을 사용하여 데이터 검증을 구현하고, 예외 처리도 포함해주세요. 데이터는 데이터베이스 없이 간단한 메모리로 관리한다.
+```
+
+### 가상환경으로 앱 실행
+
+```bash
+source .venv/bin/activate
+```
+
+```bash
+uvicorn python.main:app --reload
+```
+
+### API 확인
+
+브라우저에서 http://127.0.0.1:8000/docs 접속
+
+### 기본 데이터베이스 테이블 생성
+
+애플리케이션에 필요한 데이터를 저장할 SQLite 데이터베이스 스키마를 구성합니다.
+
+```text
+SQLite 데이터베이스를 사용하여 openapi.yaml 명세를 참고하여 현재 정의된 API를 구현한다. 애플리케이션 시작 시 자동으로 데이터베이스와 테이블을 생성하는 코드를 구현하되, 테이블이 이미 존재하는 경우 다시 생성하지 않도록 'CREATE TABLE IF NOT EXISTS' 구문을 사용하세요. 
+```
+
+서버를 재시작한 후에도 SQLite 데이터베이스에 저장된 포스트 데이터가 유지되는지 확인합니다.
+

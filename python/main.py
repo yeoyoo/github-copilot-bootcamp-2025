@@ -1,18 +1,65 @@
 import sqlite3
 import datetime
-from fastapi import FastAPI, Request, HTTPException, status, APIRouter
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, Request, HTTPException, status, APIRouter, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import List, Optional
 
+# Pydantic 모델 정의
+class PostBase(BaseModel):
+    userName: str
+    content: str
+
+class PostCreate(PostBase):
+    pass
+
+class PostUpdate(BaseModel):
+    content: str
+
+class Post(PostBase):
+    id: int
+    createdAt: str
+    updatedAt: str
+    likeCount: int
+    commentCount: int
+
+    class Config:
+        from_attributes = True
+
+class CommentBase(BaseModel):
+    userName: str
+    content: str
+
+class CommentCreate(CommentBase):
+    pass
+
+class CommentUpdate(BaseModel):
+    content: str
+
+class Comment(CommentBase):
+    id: int
+    postId: int
+    createdAt: str
+    updatedAt: str
+
+    class Config:
+        from_attributes = True
+
+class LikeBase(BaseModel):
+    userName: str
+
+class Like(LikeBase):
+    postId: int
+
+    class Config:
+        from_attributes = True
+
+# FastAPI 애플리케이션 생성
 app = FastAPI(
     title="Simple SNS API",
-    description="간단한 SQLite + FastAPI 예시 (클래스/함수 최소화)",
+    description="간단한 SQLite + FastAPI 예시 (Pydantic 모델 적용)",
     version="1.0.0"
 )
-
-# 정적 파일 마운트
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # CORS 설정
 app.add_middleware(
@@ -23,15 +70,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 템플릿 설정
-templates = Jinja2Templates(directory="templates")
-
 # API 라우터 설정
 api_router = APIRouter(prefix="/api")
-
-@app.get("/", include_in_schema=False)
-async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.on_event("startup")
 def startup():
@@ -79,7 +119,7 @@ def startup():
 # ------------------------------------------------
 # (1) 모든 포스트 목록 조회 (GET /api/posts)
 # ------------------------------------------------
-@api_router.get("/posts", operation_id="getPosts")
+@api_router.get("/posts", response_model=List[Post], operation_id="getPosts")
 def get_posts():
     conn = sqlite3.connect("sns.db")
     c = conn.cursor()
@@ -95,21 +135,18 @@ def get_posts():
 # ------------------------------------------------
 # (2) 새 포스트 작성 (POST /api/posts)
 # ------------------------------------------------
-@api_router.post("/posts", status_code=status.HTTP_201_CREATED, operation_id="createPost")
-async def create_post(request: Request):
-    body = await request.json()
-    userName = body.get("userName")
-    content = body.get("content")
-    if not userName or not content:
+@api_router.post("/posts", status_code=status.HTTP_201_CREATED, response_model=Post, operation_id="createPost")
+def create_post(post: PostCreate):
+    if not post.userName or not post.content:
         raise HTTPException(status_code=400, detail="userName, content가 필요합니다.")
 
-    now = datetime.datetime.utcnow().isoformat() + "Z"
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     conn = sqlite3.connect("sns.db")
     c = conn.cursor()
     c.execute("""
         INSERT INTO posts (userName, content, createdAt, updatedAt, likeCount, commentCount)
         VALUES (?, ?, ?, ?, 0, 0)
-    """, (userName, content, now, now))
+    """, (post.userName, post.content, now, now))
     post_id = c.lastrowid
     conn.commit()
 
@@ -125,7 +162,7 @@ async def create_post(request: Request):
 # ------------------------------------------------
 # (3) 특정 포스트 조회 (GET /api/posts/{postId})
 # ------------------------------------------------
-@api_router.get("/posts/{postId}", operation_id="getPost")
+@api_router.get("/posts/{postId}", response_model=Post, operation_id="getPost")
 def get_post(postId: int):
     conn = sqlite3.connect("sns.db")
     c = conn.cursor()
@@ -142,11 +179,9 @@ def get_post(postId: int):
 # ------------------------------------------------
 # (4) 특정 포스트 수정 (PATCH /api/posts/{postId})
 # ------------------------------------------------
-@api_router.patch("/posts/{postId}", operation_id="updatePost")
-async def update_post(postId: int, request: Request):
-    body = await request.json()
-    new_content = body.get("content")
-    if new_content is None:
+@api_router.patch("/posts/{postId}", response_model=Post, operation_id="updatePost")
+def update_post(postId: int, post_update: PostUpdate):
+    if not post_update.content:
         raise HTTPException(status_code=400, detail="수정할 content가 없습니다.")
 
     # 기존 포스트 확인
@@ -158,12 +193,12 @@ async def update_post(postId: int, request: Request):
         conn.close()
         raise HTTPException(status_code=404, detail="포스트를 찾을 수 없습니다.")
 
-    now = datetime.datetime.utcnow().isoformat() + "Z"
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     c.execute("""
         UPDATE posts
         SET content = ?, updatedAt = ?
         WHERE id = ?
-    """, (new_content, now, postId))
+    """, (post_update.content, now, postId))
     conn.commit()
 
     # 수정된 내용 다시 SELECT
@@ -200,7 +235,7 @@ def delete_post(postId: int):
 # ------------------------------------------------
 # (6) 특정 포스트의 댓글 목록 조회 (GET /api/posts/{postId}/comments)
 # ------------------------------------------------
-@api_router.get("/posts/{postId}/comments", operation_id="getComments")
+@api_router.get("/posts/{postId}/comments", response_model=List[Comment], operation_id="getComments")
 def get_comments(postId: int):
     conn = sqlite3.connect("sns.db")
     c = conn.cursor()
@@ -222,12 +257,9 @@ def get_comments(postId: int):
 # ------------------------------------------------
 # (7) 특정 포스트에 댓글 작성 (POST /api/posts/{postId}/comments)
 # ------------------------------------------------
-@api_router.post("/posts/{postId}/comments", status_code=status.HTTP_201_CREATED, operation_id="createComment")
-async def create_comment(postId: int, request: Request):
-    body = await request.json()
-    userName = body.get("userName")
-    content = body.get("content")
-    if not userName or not content:
+@api_router.post("/posts/{postId}/comments", status_code=status.HTTP_201_CREATED, response_model=Comment, operation_id="createComment")
+def create_comment(postId: int, comment: CommentCreate):
+    if not comment.userName or not comment.content:
         raise HTTPException(status_code=400, detail="userName, content가 필요합니다.")
 
     conn = sqlite3.connect("sns.db")
@@ -239,11 +271,11 @@ async def create_comment(postId: int, request: Request):
         conn.close()
         raise HTTPException(status_code=404, detail="포스트를 찾을 수 없습니다.")
 
-    now = datetime.datetime.utcnow().isoformat() + "Z"
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     c.execute("""
         INSERT INTO comments (postId, userName, content, createdAt, updatedAt)
         VALUES (?, ?, ?, ?, ?)
-    """, (postId, userName, content, now, now))
+    """, (postId, comment.userName, comment.content, now, now))
 
     # 댓글 카운트 갱신
     c.execute("""
@@ -266,7 +298,7 @@ async def create_comment(postId: int, request: Request):
 # ------------------------------------------------
 # (8) 특정 댓글 조회 (GET /api/posts/{postId}/comments/{commentId})
 # ------------------------------------------------
-@api_router.get("/posts/{postId}/comments/{commentId}", operation_id="getComment")
+@api_router.get("/posts/{postId}/comments/{commentId}", response_model=Comment, operation_id="getComment")
 def get_comment(postId: int, commentId: int):
     conn = sqlite3.connect("sns.db")
     c = conn.cursor()
@@ -292,11 +324,9 @@ def get_comment(postId: int, commentId: int):
 # ------------------------------------------------
 # (9) 특정 댓글 수정 (PATCH /api/posts/{postId}/comments/{commentId})
 # ------------------------------------------------
-@api_router.patch("/posts/{postId}/comments/{commentId}", operation_id="updateComment")
-async def update_comment(postId: int, commentId: int, request: Request):
-    body = await request.json()
-    new_content = body.get("content")
-    if new_content is None:
+@api_router.patch("/posts/{postId}/comments/{commentId}", response_model=Comment, operation_id="updateComment")
+def update_comment(postId: int, commentId: int, comment_update: CommentUpdate):
+    if not comment_update.content:
         raise HTTPException(status_code=400, detail="수정할 content가 필요합니다.")
 
     conn = sqlite3.connect("sns.db")
@@ -315,12 +345,12 @@ async def update_comment(postId: int, commentId: int, request: Request):
         conn.close()
         raise HTTPException(status_code=404, detail="댓글을 찾을 수 없습니다.")
 
-    now = datetime.datetime.utcnow().isoformat() + "Z"
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     c.execute("""
         UPDATE comments
         SET content = ?, updatedAt = ?
         WHERE id = ?
-    """, (new_content, now, commentId))
+    """, (comment_update.content, now, commentId))
     conn.commit()
 
     c.execute("SELECT * FROM comments WHERE id = ?", (commentId,))
@@ -356,7 +386,7 @@ def delete_comment(postId: int, commentId: int):
     c.execute("DELETE FROM comments WHERE id = ?", (commentId,))
 
     # commentCount 재계산
-    now = datetime.datetime.utcnow().isoformat() + "Z"
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     c.execute("""
         UPDATE posts
         SET commentCount = (SELECT COUNT(*) FROM comments WHERE postId = ?),
@@ -373,10 +403,8 @@ def delete_comment(postId: int, commentId: int):
 # (11) 특정 포스트에 좋아요 (POST /api/posts/{postId}/likes)
 # ------------------------------------------------
 @api_router.post("/posts/{postId}/likes", status_code=status.HTTP_201_CREATED, operation_id="likePost")
-async def like_post(postId: int, request: Request):
-    body = await request.json()
-    userName = body.get("userName")
-    if not userName:
+def like_post(postId: int, like: LikeBase):
+    if not like.userName:
         raise HTTPException(status_code=400, detail="userName이 필요합니다.")
 
     conn = sqlite3.connect("sns.db")
@@ -390,16 +418,16 @@ async def like_post(postId: int, request: Request):
         raise HTTPException(status_code=404, detail="포스트를 찾을 수 없습니다.")
 
     # 이미 좋아요 눌렀는지 확인
-    c.execute("SELECT * FROM likes WHERE postId = ? AND userName = ?", (postId, userName))
+    c.execute("SELECT * FROM likes WHERE postId = ? AND userName = ?", (postId, like.userName))
     if c.fetchone():
         conn.close()
         raise HTTPException(status_code=400, detail="이미 좋아요를 눌렀습니다.")
 
     # 좋아요 추가
-    c.execute("INSERT INTO likes (postId, userName) VALUES (?, ?)", (postId, userName))
+    c.execute("INSERT INTO likes (postId, userName) VALUES (?, ?)", (postId, like.userName))
 
     # likeCount +1
-    now = datetime.datetime.utcnow().isoformat() + "Z"
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     c.execute("""
         UPDATE posts
         SET likeCount = likeCount + 1,
@@ -417,10 +445,8 @@ async def like_post(postId: int, request: Request):
 # (12) 특정 포스트의 좋아요 취소 (DELETE /api/posts/{postId}/likes)
 # ------------------------------------------------
 @api_router.delete("/posts/{postId}/likes", status_code=status.HTTP_204_NO_CONTENT, operation_id="unlikePost")
-async def unlike_post(postId: int, request: Request):
-    body = await request.json()
-    userName = body.get("userName")
-    if not userName:
+def unlike_post(postId: int, like: LikeBase):
+    if not like.userName:
         raise HTTPException(status_code=400, detail="userName이 필요합니다.")
 
     conn = sqlite3.connect("sns.db")
@@ -434,16 +460,16 @@ async def unlike_post(postId: int, request: Request):
         raise HTTPException(status_code=404, detail="포스트를 찾을 수 없습니다.")
 
     # 좋아요 존재 여부 확인
-    c.execute("SELECT * FROM likes WHERE postId = ? AND userName = ?", (postId, userName))
+    c.execute("SELECT * FROM likes WHERE postId = ? AND userName = ?", (postId, like.userName))
     if not c.fetchone():
         conn.close()
         raise HTTPException(status_code=404, detail="좋아요 정보가 없습니다.")
 
     # 좋아요 삭제
-    c.execute("DELETE FROM likes WHERE postId = ? AND userName = ?", (postId, userName))
+    c.execute("DELETE FROM likes WHERE postId = ? AND userName = ?", (postId, like.userName))
 
     # likeCount -1
-    now = datetime.datetime.utcnow().isoformat() + "Z"
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     c.execute("""
         UPDATE posts
         SET likeCount = likeCount - 1,

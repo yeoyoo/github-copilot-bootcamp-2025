@@ -404,3 +404,5 @@ FodyWeavers.xsd
 # python example
 sns.db
 .DS_Store
+
+.venv
