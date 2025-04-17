@@ -120,7 +120,7 @@ spring.datasource.url=jdbc:sqlite:../../python/sns.db
 ### 백엔드 앱 전환 및 확인
 
 #### 확인
-이제 모든 코드 생성이 완료되었습니다. 마막으로 Node JS로 작성된 프론트엔드 앱에서 기존 URL과 동일하게 호출할 수 있도록 Spring Boot 앱의 포트를 변경합니다. 
+이제 모든 코드 생성이 완료되었습니다. 마지막으로 Node JS로 작성된 프론트엔드 앱에서 기존 URL과 동일하게 호출할 수 있도록 Spring Boot 앱의 포트를 변경합니다. 
 
 변경 전 [여기](01-python.md#서비스-종료)를 참고하여 Python 앱을 구동 중지합니다. 
 
