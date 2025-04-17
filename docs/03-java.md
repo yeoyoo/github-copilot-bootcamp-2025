@@ -57,6 +57,7 @@ Spring Boot Initializr를 이용하면 Spring Boot 앱을 쉽게 생성할 수 �
   * Lombok
 
 초기 Spring Boot 앱 프로젝트가 생성되었으면 우측 하단에의 "Open new project"를 클릭하여 방금 생성한 프로젝트를 오픈합니다.
+![그림](images/java01.png)
 
 #### 빌드 및 앱 구동
 최초 생성된 앱이 에러가 없는지 빌드 후 앱 구동을 통해 확인해 봅니다.
@@ -65,9 +66,7 @@ Spring Boot Initializr를 이용하면 Spring Boot 앱을 쉽게 생성할 수 �
 ```
 
 터미널에 다음과 같은 로그가 출력되면 앱이 정상적으로 구동된 것입니다.
-
-![그림](http://127.0.0.1:8000/docs)
-
+![그림](images/java02.png)
 
 #### Rest API 추가 및 확인
 디펜던시가 에러 없이 잘 추가되었는지 확인하기 위해 RestController를 추가해 봅니다. 기본 호출할 Rest API로 /hello 를 생성해 보겠습니다. GitHub Copilot을 Agent 모드로 변경하고, 모델을 "Claude 3.7 Sonnet"으로 변경한 후 다음과 같이 프롬프트를 입력합니다.
@@ -104,16 +103,16 @@ GitHub Copilot에 다음과 같이 프롬프트를 입력합니다.
 #### Database URL 변경
 이제 기존 Python에서 사용하던 데이타베이스를 참조하도록 환경을 변경해 봅니다. 해당 파일은 다음 위치에 존재합니다.
 ```
-/python/sns.db
+/workspaces/github-copilot-bootcamp-2025/python/sns.db
 ```
 
 Spring Boot 프로젝트의 다음 파일을 오픈해서 파일 주소를 변경합니다.
-```
-파일 명: <project_root>/src/main/resources/application.properties
-```
+* project_root: /workspaces/github-copilot-bootcamp-2025/java/demo
+* 파일 명: <project_root>/src/main/resources/application.properties
+
 변경할 내용은 다음과 같습니다.
 ```
-spring.datasource.url=jdbc:sqlite:../../python/sns.db
+spring.datasource.url=jdbc:sqlite:/workspaces/github-copilot-bootcamp-2025/python/sns.db
 ```
 다시 앱을 빌드해서 데이타베이스가 제대로 참조되었는지 확인합니다.
 
