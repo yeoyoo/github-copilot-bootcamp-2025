@@ -63,6 +63,6 @@
   "onCreateCommand": "./.devcontainer/on-create.sh > ~/on-create.log",
 
   "hostRequirements": {
-    "memory": "8gb"
+    "memory": "16gb"
   }
 }
