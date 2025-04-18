@@ -1,31 +1,5 @@
-# JavaScript React 앱
+# JavaScript 앱 시작하기
 
-## 사용 기술
-- React
-- Vite
-- Tailwind CSS
-- Yarn 패키지 매니저
+실습을 시작할 때 이 디렉토리에서 시작하면 됩니다.
 
-## 시작하기
-
-### 필요 조건
-- Node.js (14.x 이상)
-- Yarn
-  ```bash
-  npm install -g yarn
-  ```
-
-### 설치 및 실행
-```bash
-# 의존성 설치
-yarn install
-
-# 개발 서버 실행
-yarn dev
-
-# 프로덕션 빌드
-yarn build
-
-# 빌드 미리보기
-yarn preview
-```
+완성본 샘플 코드는 [/complete/javascript](../complete/javascript/)에서 확인해 보세요.
