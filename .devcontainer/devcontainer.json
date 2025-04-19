@@ -4,25 +4,18 @@
   "image": "mcr.microsoft.com/devcontainers/dotnet:8.0-noble",
 
   "features": {
-    "ghcr.io/azure/azure-dev/azd:latest": {},
     "ghcr.io/devcontainers/features/common-utils:latest": {},
     "ghcr.io/devcontainers/features/dotnet:latest": {
       "version": "9.0"
     },
-    "ghcr.io/devcontainers/features/azure-cli:latest": {
-      "extensions": "account,containerapp,deploy-to-azure,subscription"
-    },
     "ghcr.io/devcontainers/features/docker-in-docker:latest": {},
-    "ghcr.io/devcontainers/features/github-cli:latest": {},
     "ghcr.io/devcontainers/features/java:latest": {
       "installGradle": true,
       "installMaven": true,
       "version": "21"
     },
-    "ghcr.io/devcontainers/features/kubectl-helm-minikube:latest": {},
     "ghcr.io/devcontainers/features/node:latest": {},
-    "ghcr.io/devcontainers/features/python:latest": {},
-    "ghcr.io/prom3theu5/aspirational-manifests/aspirate:latest": {}
+    "ghcr.io/devcontainers/features/python:latest": {}
   },
 
   "overrideFeatureInstallOrder": [
@@ -38,8 +31,6 @@
         "GitHub.copilot-chat",
         "GitHub.vscode-github-actions",
         "GitHub.vscode-pull-request-github",
-        "ms-azuretools.azure-dev",
-        "ms-azuretools.vscode-bicep",
         "ms-azuretools.vscode-docker",
         "ms-dotnettools.csharp",
         "ms-dotnettools.csdevkit",
@@ -63,6 +54,6 @@
   "onCreateCommand": "./.devcontainer/on-create.sh > ~/on-create.log",
 
   "hostRequirements": {
-    "memory": "16gb"
+    "memory": "8gb"
   }
 }
