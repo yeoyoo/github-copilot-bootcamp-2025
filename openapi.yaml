@@ -350,12 +350,6 @@ paths:
           schema:
             type: integer
           description: 좋아요를 취소할 포스트의 ID
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UnlikeRequest"
       responses:
         "204":
           description: 좋아요 취소 성공
@@ -494,15 +488,6 @@ components:
     # 좋아요 관련
     # -------------------
     LikeRequest:
-      type: object
-      required:
-        - userName
-      properties:
-        userName:
-          type: string
-          example: "charlie"
-
-    UnlikeRequest:
       type: object
       required:
         - userName
