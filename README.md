@@ -1,24 +1,24 @@
 # GitHub Copilot Bootcamp 2025
 
-GitHub Copilot의 최신 기능을 이용해서 다양한 언어로 다양한 애플리케이션을 개발해 봅시다. 진정한 vibe coding에 올라타 보세요!
+[GitHub Copilot](https://docs.github.com/ko/copilot/about-github-copilot/what-is-github-copilot)의 최신 기능을 이용해서 다양한 언어로 다양한 애플리케이션을 개발해 봅시다. 진정한 vibe coding에 올라타 보세요!
 
 ## 워크샵 목표
 
 - GitHub Copilot의 다양한 기능을 활용해서 애플리케이션을 개발할 수 있습니다.
 - GitHub Copilot의 Agent 모드를 이용해서 애플리케이션을 개발할 수 있습니다.
-- GitHub Copilot에 사용자 지정 지침(Custom Instruction)을 추가하여 좀 더 정확하게 애플리케이션을 개발할 수 있습니다.
+- GitHub Copilot에 사용자 지정 지침(Custom Instructions)을 추가하여 좀 더 정확하게 애플리케이션을 개발할 수 있습니다.
 - GitHub Copilot에 다양한 MCP 서버를 추가하여 좀 더 정확하게 애플리케이션을 개발할 수 있습니다.
 
 ## 워크샵 사전 준비사항
 
-GitHub Codespaces를 활용할 경우, 크로미움 계열의 웹 브라우저만 있으면 됩니다. 다만, 로컬 PC에서 직접 개발할 경우, 아래와 같은 내용을 직접 준비해야 합니다.
+[GitHub Codespaces](https://docs.github.com/ko/codespaces/about-codespaces/what-are-codespaces)를 활용할 경우, 크로미움 계열의 웹 브라우저만 있으면 됩니다. 다만, 로컬 PC에서 직접 개발할 경우, 아래와 같은 내용을 직접 준비해야 합니다.
 
 ### 공통
 
 - [Visual Studio Code](https://code.visualstudio.com/) 설치
 - VS Code [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) 익스텐션 설치
 - VS Code [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) 익스텐션 설치
-- [PowerShell 7](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) 설치 👉 Windows 사용자용
+- 💥 Windows 사용자용 👉 [PowerShell 7](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) 설치
 - [git CLI](https://git-scm.com/downloads) 설치
 - [GitHub CLI](https://cli.github.com/) 설치
 - [Docker Desktop](https://docs.docker.com/get-started/introduction/get-docker-desktop/) 설치
@@ -35,7 +35,7 @@ GitHub Codespaces를 활용할 경우, 크로미움 계열의 웹 브라우저�
 ### JavaScript
 
 - [nvm](https://github.com/nvm-sh/nvm) 또는 [nvm for Windows](https://github.com/coreybutler/nvm-windows) 설치
-- nvm을 통한 [Node.js](https://nodejs.org/) 설치 (LTS 버전 권장)
+- nvm을 통한 [Node.js](https://nodejs.org/) 최신 LTS 버전 설치
 - [Yarn](https://yarnpkg.com/getting-started/install) 패키지 매니저 설치
 
     ```bash
@@ -117,6 +117,7 @@ Contoso 아웃도어 컴파니는 회사의 다양한 아웃도어용 제품 홍
 ## 참고 자료
 
 - [GitHub Copilot 에이전트 모드 및 MCP](https://code.visualstudio.com/blogs/2025/04/07/agentMode)
-- [GitHub Copilot 사용자 정의 지침(Custom Instruction)](https://code.visualstudio.com/docs/copilot/copilot-customization)
+- [GitHub Copilot 사용자 정의 지침(Custom Instructions)](https://code.visualstudio.com/docs/copilot/copilot-customization)
 - [GitHub Copilot AI 모델 바꾸기](https://docs.github.com/ko/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat?tool=vscode)
+- [GitHub Copilot](https://docs.github.com/ko/copilot/about-github-copilot/what-is-github-copilot)
 - [GitHub Codespaces](https://docs.github.com/ko/codespaces/about-codespaces/what-are-codespaces)
