@@ -2,6 +2,12 @@
 
 [GitHub Copilot](https://docs.github.com/ko/copilot/about-github-copilot/what-is-github-copilot)의 최신 기능을 이용해서 다양한 언어로 다양한 애플리케이션을 개발해 봅시다. 진정한 vibe coding에 올라타 보세요!
 
+## 시나리오
+
+Contoso 아웃도어 컴파니는 회사의 다양한 아웃도어용 제품 홍보를 위한 마이크로 소셜미디어 사이트를 개발하려고 합니다. 현재 개발 부서에는 Python 개발자가 백엔드 API를, JavaScript 개발자가 프론트엔드 웹 UI를 담당하고 있습니다. 마케팅 팀에서는 기본적인 MVP를 제작해서 웹사이트를 론칭할 계획을 세웠습니다. 하지만, 개발 기간이 촉박해서 빠르게 제작을 해야 하는 상황입니다.
+
+앗, 그런데 말입니다...
+
 ## 워크샵 목표
 
 - GitHub Copilot의 다양한 기능을 활용해서 애플리케이션을 개발할 수 있습니다.
@@ -53,12 +59,6 @@
 
 - [.NET SDK 9](https://dotnet.microsoft.com/download/dotnet/9.0) 설치
 - [VS Code C# Dev Kit](https://marketplace.visualstudio.com/items/?itemName=ms-dotnettools.csdevkit) 익스텐션 설치
-
-## 시나리오
-
-Contoso 아웃도어 컴파니는 회사의 다양한 아웃도어용 제품 홍보를 위한 마이크로 소셜미디어 사이트를 개발하려고 합니다. 현재 개발 부서에는 Python 개발자가 백엔드 API를, JavaScript 개발자가 프론트엔드 웹 UI를 담당하고 있습니다. 마케팅 팀에서는 기본적인 MVP를 제작해서 웹사이트를 론칭할 계획을 세웠습니다. 하지만, 개발 기간이 촉박해서 빠르게 제작을 해야 하는 상황입니다.
-
-앗, 그런데 말입니다...
 
 ## 작업 문서
 
