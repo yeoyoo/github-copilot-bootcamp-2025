@@ -23,7 +23,7 @@ Contoso 아웃도어 컴파니의 마케팅 팀에서는 제품 홍보를 위한
 1. React 앱을 스캐폴딩(프로젝트 기본 구조 자동 생성)합니다. 아래와 같은 프롬프트를 이용해 보세요.
 
     ```text
-    `javascript` 폴더 안에 React를 사용한 프론트엔드 앱을 구성하려합니다. 패키지매니저는 `yarn`, 빌드 툴은 `vite`, 언어는 JavaScript를 사용할 예정이고 AI를 사용한 빠른 마크업 개발을 위해 CSS 프레임워크론 Tailwind CSS를 사용할 예정입니다. 새로운 폴더를 만들지 말고 `javascript` 폴더에 React 앱 스캐폴딩을 시작해주세요.
+    `javascript` 폴더 안에 React를 사용한 프론트엔드 앱을 구성하려합니다. 패키지매니저는 `npm`, 빌드 툴은 `vite`, 언어는 JavaScript를 사용할 예정이고 AI를 사용한 빠른 마크업 개발을 위해 CSS 프레임워크론 Tailwind CSS를 사용할 예정입니다. 새로운 폴더를 만들지 말고 `javascript` 폴더에 React 앱 스캐폴딩을 시작해주세요.
     ```
 
 1. 스캐폴딩이 잘 마무리 되었는지 확인합니다.

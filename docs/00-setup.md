@@ -34,7 +34,7 @@
     # Node.js 버전 확인
     node --version
     npm --version
-    yarn --version
+
     ```
 
     ```bash

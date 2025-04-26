@@ -42,11 +42,6 @@ Contoso 아웃도어 컴파니는 회사의 다양한 아웃도어용 제품 홍
 
 - [nvm](https://github.com/nvm-sh/nvm) 또는 [nvm for Windows](https://github.com/coreybutler/nvm-windows) 설치
 - nvm을 통한 [Node.js](https://nodejs.org/) 최신 LTS 버전 설치
-- [Yarn](https://yarnpkg.com/getting-started/install) 패키지 매니저 설치
-
-    ```bash
-    npm install -g yarn
-    ```
 
 ### Java
 
